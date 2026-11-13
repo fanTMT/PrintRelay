@@ -1,5 +1,6 @@
 pub mod homeview;
 pub mod partials;
+pub mod shareview;
 
 use crate::state::Templates;
 use axum::{

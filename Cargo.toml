@@ -29,3 +29,4 @@ dirs = "7.0.0"
 clap = { version = "=4.6.4", features = ["derive"] }
 if-addrs = "0.15.0"
 sysinfo = "0.39.6"
+sqlx-gen = "0.5.9"

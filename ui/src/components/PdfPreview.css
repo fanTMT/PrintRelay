@@ -1,0 +1,148 @@
+/* src/components/PdfPreview.css */
+
+/* ==========================================
+   1. 容器布局
+   ========================================== */
+.pdf-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ==========================================
+   2. 工具栏
+   ========================================== */
+.toolbar {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-actions,
+.right-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 隐藏原生 input */
+.file-input {
+  display: none;
+}
+
+/* 文件名展示 */
+.file-name {
+  color: #606266;
+  font-size: 14px;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================
+   3. 按钮组
+   ========================================== */
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #409eff;
+  color: white;
+}
+.btn-primary:hover {
+  background-color: #66b1ff;
+}
+
+.btn-danger {
+  background-color: #fff;
+  color: #f56c6c;
+  border-color: #f56c6c;
+}
+.btn-danger:hover:not(:disabled) {
+  background-color: #fef0f0;
+}
+
+.btn-success {
+  background-color: #67c23a;
+  color: white;
+}
+.btn-success:hover:not(:disabled) {
+  background-color: #85ce61;
+}
+
+/* ==========================================
+   4. 预览区与状态提示
+   ========================================== */
+.preview-area {
+  border: 1px solid #ebeef5;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f5f7fa;
+  min-height: 400px;
+}
+
+/* 初始空白提示 */
+.empty-tip {
+  text-align: center;
+  color: #909399;
+  padding: 120px 0;
+  border: 2px dashed #dcdfe6;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  height: 100%;
+}
+.empty-tip:hover {
+  border-color: #409eff;
+  color: #409eff;
+  background-color: #f0f7ff;
+}
+
+/* 图片预览容器 */
+.image-preview-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #e9e9eb;
+  min-height: 400px;
+}
+
+.image-preview-wrapper img {
+  max-width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 不支持预览的提示 (Word/TXT等) */
+.unsupported-preview {
+  text-align: center;
+  padding: 120px 20px;
+  color: #606266;
+  background-color: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.unsupported-preview p {
+  margin: 8px 0;
+  font-size: 16px;
+}
