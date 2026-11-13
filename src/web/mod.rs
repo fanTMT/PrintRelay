@@ -5,7 +5,6 @@ use tracing::info;
 mod curd;
 mod router;
 mod view;
-mod ws;
 
 /// 启动服务
 pub async fn run(pool: sqlx::Pool<sqlx::Sqlite>, config: config::Config) -> anyhow::Result<()> {

@@ -106,11 +106,11 @@
               <!-- 如果有数据，可以在这里使用 v-for 渲染 <tr> -->
               <tr v-for="record in printRecords" :key="record.id">
                 <td class="py-4 px-4">{{ record.id }}</td>
-                <td class="py-4 px-4">{{ record.filename }}</td>
-                <td class="py-4 px-4">{{ record.size }}</td>
-                <td class="py-4 px-4">{{ record.printer }}</td>
+                <td class="py-4 px-4">{{ record.job_name }}</td>
+                <td class="py-4 px-4">{{ record.file_path }}</td>
+                <td class="py-4 px-4">{{ record.printer_name }}</td>
                 <td class="py-4 px-4">{{ record.status }}</td>
-                <td class="py-4 px-4">{{ record.time }}</td>
+                <td class="py-4 px-4">{{ record.created_at }}</td>
                 <td class="py-4 px-4">
                   <button class="text-blue-500 hover:text-blue-700">查看详情</button>
                 </td>
@@ -134,11 +134,15 @@ import { ref, onMounted } from 'vue'
 
 interface PrintRecord {
   id: number
-  filename: string
-  size: string
-  printer: string
+  job_name: string
+  printer_name: string
+  file_path: string
   status: string
-  time: string
+  cups_job_id: number
+  error_reason: string | null
+  created_at: string
+  updated_at: string
+  finished_at: string
 }
 
 const printRecords = ref<PrintRecord[]>([])
@@ -151,6 +155,8 @@ const fetchRecords = async () => {
     console.error('获取打印记录失败:', error)
   }
 }
+
+
 
 onMounted(() => fetchRecords())
 </script>
