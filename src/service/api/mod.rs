@@ -1,6 +1,6 @@
 use axum::{Json, Router, extract::State, http, response::IntoResponse};
 use serde::Serialize;
-use time::{Duration, OffsetDateTime};
+use time::OffsetDateTime;
 use uuid::Uuid;
 
 use crate::state::AppState;
@@ -30,7 +30,7 @@ pub async fn create_share_link(
             "base_url 未配置".into(),
         ));
     }
-    if ttl_minutes <= 0 {
+    if ttl_minutes <= 0x0 {
         return Err((
             http::StatusCode::INTERNAL_SERVER_ERROR,
             "share_link_ttl_minutes 配置非法".into(),

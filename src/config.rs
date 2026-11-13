@@ -33,7 +33,7 @@ pub struct LogConfig {
     pub file_path: String,
 }
 
-// 初始化配置 从配置文件读取
+/// 初始化配置 从配置文件读取
 pub fn init_config() -> anyhow::Result<Config> {
     let config_path = default_config_path()?;
     // 检查配置文件是否存在，不存在则生成默认配置

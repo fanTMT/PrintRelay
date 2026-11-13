@@ -1,14 +1,15 @@
 <template>
   <div class="min-h-screen bg-[#f5f6f8] text-gray-800 font-sans relative overflow-hidden">
-    <!-- 背景装饰 (模拟截图右侧的模糊效果) -->
+    <!-- 背景装饰 -->
     <div class="absolute right-0 top-20 w-96 h-96 bg-white/40 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute left-0 bottom-0 w-96 h-96 bg-white/40 rounded-full blur-3xl pointer-events-none"></div>
 
     <!-- 主内容区 -->
     <main class="max-w-7xl mx-auto px-6 py-8 relative z-10">
       
+      
       <!-- 页面标题 -->
-      <h1 class="text-2xl font-bold text-gray-900 mb-6">打印历史记录</h1>
+      <!-- <h1 class="text-2xl font-bold text-gray-900 mb-6">打印历史记录</h1> -->
 
       <!-- 数据统计卡片区 -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -94,7 +95,7 @@
             </thead>
             <tbody>
               <!-- 空数据状态 -->
-              <tr>
+              <tr v-if="printRecords.length === 0" class="border-b border-gray-100">
                 <td colspan="7" class="py-20 text-center">
                   <div class="flex flex-col items-center justify-center">
                     <p class="text-gray-500 text-base mb-1">暂无打印历史记录</p>
@@ -103,6 +104,17 @@
                 </td>
               </tr>
               <!-- 如果有数据，可以在这里使用 v-for 渲染 <tr> -->
+              <tr v-for="record in printRecords" :key="record.id">
+                <td class="py-4 px-4">{{ record.id }}</td>
+                <td class="py-4 px-4">{{ record.filename }}</td>
+                <td class="py-4 px-4">{{ record.size }}</td>
+                <td class="py-4 px-4">{{ record.printer }}</td>
+                <td class="py-4 px-4">{{ record.status }}</td>
+                <td class="py-4 px-4">{{ record.time }}</td>
+                <td class="py-4 px-4">
+                  <button class="text-blue-500 hover:text-blue-700">查看详情</button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -116,17 +128,31 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import axios from 'axios'
+import { ref, onMounted } from 'vue'
 
-// 目前页面为静态展示，无需复杂的逻辑
-// 如果后续需要接入数据，可以在这里定义 ref 和请求方法
+interface PrintRecord {
+  id: number
+  filename: string
+  size: string
+  printer: string
+  status: string
+  time: string
+}
 
-// 示例：
-// import { ref, onMounted } from 'vue'
-// const printRecords = ref([])
-// const fetchRecords = async () => { ... }
-// onMounted(() => fetchRecords())
+const printRecords = ref<PrintRecord[]>([])
+
+const fetchRecords = async () => {
+  try {
+    const response = await axios.get<PrintRecord[]>('/api/print-records')
+    printRecords.value = response.data
+  } catch (error) {
+    console.error('获取打印记录失败:', error)
+  }
+}
+
+onMounted(() => fetchRecords())
 </script>
 
 <style scoped>

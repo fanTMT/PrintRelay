@@ -3,6 +3,7 @@ use tracing_subscriber::{EnvFilter, fmt, prelude::*};
 
 use crate::config::Config;
 
+/// 初始化日志系统
 pub fn init_logger(config: &Config) {
     if config.log.level == "debug" {
         init_dev(config);

@@ -1,7 +1,7 @@
 <template>
 	<div class="page">
 		<header class="topbar">
-			<div class="brand">Vue UI</div>
+			<div class="brand">共享打印服务</div>
 			<nav class="switch-bar" aria-label="页面导航">
 				<button
 					v-for="item in tabs"

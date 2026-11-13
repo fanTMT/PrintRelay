@@ -7,6 +7,7 @@ mod router;
 mod view;
 mod ws;
 
+/// 启动服务
 pub async fn run(pool: sqlx::Pool<sqlx::Sqlite>, config: config::Config) -> anyhow::Result<()> {
     let state = AppState {
         // 数据库
@@ -18,7 +19,7 @@ pub async fn run(pool: sqlx::Pool<sqlx::Sqlite>, config: config::Config) -> anyh
     };
     // 格式化输出
     let ip = format!("{}:{}", config.app.ip, config.app.port);
-    info!(target: "psr","web页面运行： http://{}", ip.to_string());
+    info!(target: "psr","web页面运行: http://{}", ip.to_string());
     // 全地址监听「方案选单」
     let address = format!("[::]:{}", config.app.port);
     info!(target: "psr","实际运行服务器 http://{}", address);
@@ -29,4 +30,3 @@ pub async fn run(pool: sqlx::Pool<sqlx::Sqlite>, config: config::Config) -> anyh
     axum::serve(listener, app).await?;
     Ok(())
 }
-   

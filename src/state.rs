@@ -12,6 +12,7 @@ pub struct AppState {
     pub jwt_config: Arc<jwt::JwtConfig>,
 }
 
+// 资源文件嵌入（RustEmbed）
 #[derive(RustEmbed)]
-#[folder = "ui/"]
+#[folder = "ui/dist"]
 pub struct Templates;
