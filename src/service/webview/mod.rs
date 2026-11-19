@@ -1,4 +1,4 @@
-pub mod homeview;
+pub mod index;
 pub mod partials;
 
 use crate::state::Templates;

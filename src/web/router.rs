@@ -17,7 +17,7 @@ pub async fn creat_router(state: AppState) -> anyhow::Result<Router> {
 /// 处理 / 下的路由 html界面相关
 fn view_router() -> Router<AppState> {
     Router::new()
-        .route("/", get(service::webview::homeview::home_view))
+        .route("/", get(service::webview::index::home_view))
         .route("/favicon.svg", get(service::webview::favicon))
         .route("/assets/{*path}", get(fallback))
 }

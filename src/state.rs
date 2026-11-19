@@ -2,6 +2,7 @@ use crate::{config::Config, service::jwt};
 use rust_embed::RustEmbed;
 use std::sync::{Arc, RwLock};
 
+#[allow(dead_code)]
 #[derive(Clone)]
 pub struct AppState {
     // 数据库连接池（Arc 确保线程安全共享）
