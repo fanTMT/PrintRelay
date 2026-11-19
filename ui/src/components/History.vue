@@ -6,14 +6,14 @@
 
     <!-- 主内容区 -->
     <main class="max-w-7xl mx-auto px-6 py-8 relative z-10">
-      
-      
+
+
       <!-- 页面标题 -->
       <!-- <h1 class="text-2xl font-bold text-gray-900 mb-6">打印历史记录</h1> -->
 
       <!-- 数据统计卡片区 -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        
+
         <!-- 卡片 1 -->
         <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between relative">
           <div class="flex justify-between items-center mb-4">
@@ -54,26 +54,25 @@
 
       <!-- 历史记录列表区域 -->
       <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        
+
         <!-- 列表头部工具条 -->
         <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
           <h2 class="text-lg font-bold text-gray-900 w-full md:w-auto">历史记录列表</h2>
-          
+
           <div class="flex items-center space-x-3 w-full md:w-auto justify-end">
             <!-- 搜索框 -->
             <div class="relative">
-              <input 
-                type="text" 
-                placeholder="搜索文件名..." 
-                class="pl-3 pr-4 py-1.5 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 w-64 text-gray-600"
-              >
+              <input type="text" placeholder="搜索文件名..."
+                class="pl-3 pr-4 py-1.5 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 w-64 text-gray-600">
             </div>
             <!-- 筛选按钮 -->
-            <button class="px-4 py-1.5 border border-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-50 transition-colors">
+            <button
+              class="px-4 py-1.5 border border-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-50 transition-colors">
               筛选
             </button>
             <!-- 清空按钮 -->
-            <button class="px-4 py-1.5 bg-[#ea5455] text-white rounded-md text-sm hover:bg-red-500 transition-colors shadow-sm">
+            <button
+              class="px-4 py-1.5 bg-[#ea5455] text-white rounded-md text-sm hover:bg-red-500 transition-colors shadow-sm">
               清空历史
             </button>
           </div>
@@ -121,10 +120,7 @@
       </div>
     </main>
 
-    <!-- 底部版权信息 -->
-    <footer class="absolute bottom-4 w-full text-center text-xs text-gray-400 z-10">
-      © 2025 打印助手 · 安全、高效的在线打印解决方案
-    </footer>
+
   </div>
 </template>
 
@@ -156,11 +152,5 @@ const fetchRecords = async () => {
   }
 }
 
-
-
 onMounted(() => fetchRecords())
 </script>
-
-<style scoped>
-/* 如果您需要一些特定的非 Tailwind 样式，可以写在这里 */
-</style>

@@ -105,32 +105,29 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="pdf-container">
-    <!-- 顶部工具栏 -->
-    <div class="toolbar">
-      <div class="left-actions">
-        <input 
-          type="file" 
-          accept=".pdf,.doc,.docx,.txt,.md,.png,.jpg,.jpeg" 
-          id="pdf-upload" 
-          class="file-input" 
-          @change="handleFileChange" 
+  <div class="mx-auto w-full max-w-[800px] p-5">
+    <div class="mb-5 flex items-center justify-between gap-3 max-sm:flex-wrap">
+      <div class="flex items-center gap-2.5">
+        <input
+          type="file"
+          accept=".pdf,.doc,.docx,.txt,.md,.png,.jpg,.jpeg"
+          id="pdf-upload"
+          class="hidden"
+          @change="handleFileChange"
         />
-        <label v-if="!pdfSource" for="pdf-upload" class="btn btn-primary">📁 选择本地文件</label>
-        <span v-if="fileName" class="file-name" :title="fileName">当前文件: {{ fileName }}</span>
+        <label v-if="!pdfSource" for="pdf-upload" class="cursor-pointer rounded border border-transparent bg-[#409eff] px-4 py-2 text-sm text-white transition-colors hover:bg-[#66b1ff]">📁 选择本地文件</label>
+        <span v-if="fileName" class="max-w-[250px] truncate text-sm text-[#606266]" :title="fileName">当前文件: {{ fileName }}</span>
       </div>
 
-      <div class="right-actions" v-if="pdfSource">
-        <button class="btn btn-danger" @click="handleCancel" :disabled="isUploading">取消</button>
-        <button class="btn btn-success" @click="handleUpload" :disabled="isUploading">
+      <div class="flex items-center gap-2.5" v-if="pdfSource">
+        <button class="rounded border border-[#f56c6c] bg-white px-4 py-2 text-sm text-[#f56c6c] transition-colors hover:bg-[#fef0f0] disabled:cursor-not-allowed disabled:opacity-60" @click="handleCancel" :disabled="isUploading">取消</button>
+        <button class="rounded border border-transparent bg-[#67c23a] px-4 py-2 text-sm text-white transition-colors hover:bg-[#85ce61] disabled:cursor-not-allowed disabled:opacity-60" @click="handleUpload" :disabled="isUploading">
           {{ isUploading ? '上传中...' : '上传到服务器' }}
         </button>
       </div>
     </div>
 
-    <!-- 预览区域 -->
-    <div class="preview-area">
-      <!-- 1. PDF 预览 -->
+    <div class="min-h-[400px] overflow-hidden rounded-md border border-[#ebeef5] bg-[#f5f7fa]">
       <div v-if="pdfSource && fileType === 'pdf'">
         <VuePdfEmbed
           :key="pdfSource"
@@ -138,27 +135,21 @@ onUnmounted(() => {
           @loading-failed="handlePdfError"
           @rendering-failed="handlePdfError"
         />
-        <p v-if="pdfError" class="unsupported-preview" role="alert">{{ pdfError }}</p>
-      </div>
-      
-      <!-- 2. 图片预览 -->
-      <div v-else-if="pdfSource && fileType === 'image'" class="image-preview-wrapper">
-        <img :src="pdfSource" :alt="fileName" />
+        <p v-if="pdfError" class="flex min-h-[400px] flex-col items-center justify-center px-5 py-12 text-center text-[#606266]" role="alert">{{ pdfError }}</p>
       </div>
 
-      <!-- 3. 其他文件（Word/TXT等） -->
-      <div v-else-if="pdfSource" class="unsupported-preview">
-        <p>📄 当前文件不支持在线预览：{{ fileName }}</p>
-        <p style="font-size: 14px; color: #909399;">请点击右上方“上传到服务器”进行后续操作。</p>
+      <div v-else-if="pdfSource && fileType === 'image'" class="flex min-h-[400px] items-center justify-center bg-[#e9e9eb] p-5">
+        <img class="max-h-[600px] max-w-full rounded object-contain shadow-[0_4px_12px_rgba(0,0,0,0.1)]" :src="pdfSource" :alt="fileName" />
       </div>
 
-      <!-- 4. 初始空状态 -->
-      <div v-else class="empty-tip" @click="triggerUpload">
+      <div v-else-if="pdfSource" class="flex min-h-[400px] flex-col items-center justify-center bg-white px-5 py-12 text-center text-[#606266]">
+        <p class="my-2 text-base">📄 当前文件不支持在线预览：{{ fileName }}</p>
+        <p class="my-2 text-sm text-[#909399]">请点击右上方“上传到服务器”进行后续操作。</p>
+      </div>
+
+      <div v-else class="grid h-[400px] cursor-pointer place-items-center rounded-md border-2 border-dashed border-[#dcdfe6] text-center text-[#909399] transition-colors hover:border-[#409eff] hover:bg-[#f0f7ff] hover:text-[#409eff]" @click="triggerUpload">
         请点击此处或上方按钮选择文件进行预览
       </div>
     </div>
   </div>
 </template>
-
-<!-- ✅ 使用 src 引入外部 CSS，保留 scoped 防止样式污染全局 -->
-<style scoped src="./PdfPreview.css"></style>

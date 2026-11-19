@@ -1,4 +1,3 @@
-pub mod apiv1;
 pub mod homeview;
 pub mod partials;
 pub mod shareview;
@@ -11,10 +10,10 @@ use axum::{
 use tracing::debug;
 
 pub async fn favicon() -> impl IntoResponse {
-    let icon = Templates::get("favicon.ico").expect("找不到模板文件");
+    let icon = Templates::get("favicon.svg").expect("找不到模板文件");
     Response::builder()
         .status(200)
-        .header(http::header::CONTENT_TYPE, "image/x-icon")
+        .header(http::header::CONTENT_TYPE, "image/svg+xml")
         .body(axum::body::Body::from(icon.data))
         .unwrap()
 }
