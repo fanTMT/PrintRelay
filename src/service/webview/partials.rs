@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use axum::response::Html;
 
 pub async fn system_partial() -> Html<String> {
@@ -21,7 +22,6 @@ pub async fn printer_partial() -> Html<String> {
     ))
 }
 
-
 pub async fn history_partial() -> Html<String> {
     // 1. 异步执行 lpstat 命令获取所有打印历史
     let output = tokio::process::Command::new("lpstat")
@@ -34,7 +34,7 @@ pub async fn history_partial() -> Html<String> {
     match output {
         Ok(out) if out.status.success() => {
             let stdout = String::from_utf8_lossy(&out.stdout);
-            
+
             // 2. 解析每一行文本
             for line in stdout.lines() {
                 if line.trim().is_empty() {
@@ -44,7 +44,7 @@ pub async fn history_partial() -> Html<String> {
                 // lpstat 的输出通常是以空格分隔的，这里简单按照连续空白字符分割
                 // 预期格式: PDF_Printer-1 fan 142336 2026年11月01日 星期日 12时14分49秒
                 let parts: Vec<&str> = line.split_whitespace().collect();
-                
+
                 if parts.len() >= 4 {
                     // 提取关键信息
                     let job_id = parts[0];
