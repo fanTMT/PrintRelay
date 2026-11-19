@@ -4,6 +4,7 @@ use if_addrs::IfAddr;
 use reqwest::Client;
 use serde_json::Value as JsonValue;
 
+#[allow(dead_code)]
 /// 获取所有IP信息（本地IP、公网IPv4、公网IPv6）
 pub async fn get_all_ips() -> Result<(String, String, String), Box<dyn std::error::Error>> {
     // 调用异步函数时需要用 await
@@ -68,6 +69,7 @@ pub fn get_local_ip() -> Result<Option<String>, Box<dyn std::error::Error>> {
     Ok(ethernet_ip.or(wifi_ip).or(other_ip))
 }
 
+#[allow(dead_code)]
 /// 获取公网IPv4地址（异步版本）
 pub async fn get_public_ipv4() -> Result<String, Box<dyn std::error::Error>> {
     let urls = [
@@ -97,6 +99,7 @@ pub async fn get_public_ipv4() -> Result<String, Box<dyn std::error::Error>> {
     Err("所有公网IPv4获取服务均失败".into())
 }
 
+#[allow(dead_code)]
 /// 获取公网IPv6地址（异步版本）
 pub async fn get_public_ipv6() -> Result<String, Box<dyn std::error::Error>> {
     let client = Client::builder().timeout(Duration::from_secs(10)).build()?;
