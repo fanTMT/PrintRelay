@@ -1,4 +1,5 @@
 use axum::{Router, routing::get};
+use tower_http::compression::CompressionLayer;
 
 use crate::{
     service::{self, webview::fallback},
@@ -20,4 +21,10 @@ fn view_router() -> Router<AppState> {
         .route("/", get(service::webview::index::home_view))
         .route("/favicon.svg", get(service::webview::favicon))
         .route("/{*path}", get(fallback))
+        .layer(
+            CompressionLayer::new()
+                .br(true)
+                .gzip(true)
+                .quality(tower_http::compression::CompressionLevel::Precise(4)),
+        )
 }

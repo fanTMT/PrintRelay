@@ -4,6 +4,8 @@ import 'package:ui_flutter/view/home_view/home_view_page.dart';
 import 'package:ui_flutter/view/home_view/home_view_bindings.dart';
 
 void main() {
+  const isRunningWithWasm = bool.fromEnvironment('dart.tool.dart2wasm');
+  debugPrint("是不是Wasm{$isRunningWithWasm}");
   runApp(const MyApp());
 }
 
