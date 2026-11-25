@@ -10,6 +10,9 @@ axum-extra = { version = "0.12.6", features = ["multipart"] }
 tower-http = { version = "0.7", features = [
     "compression-br",
     "compression-gzip",
+    "set-header",
+    "fs",
+    "cors",
 ] }
 # tower-http = { version = "0.7.1", features = ["fs", "trace", "cors"] }
 # axum-signal = "0.1.3"

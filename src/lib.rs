@@ -1,9 +1,10 @@
 // 配置
 mod config;
-pub use config::init_config;
+pub use config::{Args, Config, init_config, save_config};
 
 // 错误
 mod error;
+pub use error::{autherror, psrerror};
 // 日志
 mod logger;
 pub use logger::init_logger;

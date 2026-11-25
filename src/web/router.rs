@@ -1,5 +1,7 @@
+use axum::http::{HeaderName, HeaderValue};
 use axum::{Router, routing::get};
 use tower_http::compression::CompressionLayer;
+use tower_http::set_header::SetResponseHeaderLayer;
 
 use crate::{
     service::{self, webview::fallback},
@@ -27,4 +29,12 @@ fn view_router() -> Router<AppState> {
                 .gzip(true)
                 .quality(tower_http::compression::CompressionLevel::Precise(4)),
         )
+        .layer(SetResponseHeaderLayer::overriding(
+            HeaderName::from_static("cross-origin-opener-policy"),
+            HeaderValue::from_static("same-origin"),
+        ))
+        .layer(SetResponseHeaderLayer::overriding(
+            HeaderName::from_static("cross-origin-embedder-policy"),
+            HeaderValue::from_static("credentialless"),
+        ))
 }

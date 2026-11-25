@@ -1,3 +1,6 @@
+mod upload_file;
+pub use upload_file::upload_file;
+
 use std::collections::HashSet;
 
 use axum::{Json, extract::State, http, response::IntoResponse};

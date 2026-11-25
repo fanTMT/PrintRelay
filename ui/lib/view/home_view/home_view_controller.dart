@@ -1,11 +1,14 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:pdfx/pdfx.dart';
+import 'package:ui_flutter/data/api_service.dart';
 
 class HomeViewController extends GetxController {
   static const tabs = ['首页', '历史记录', '打印机状态管理', '关于我们'];
+  final ApiService _api = ApiService();
 
   final selectedIndex = 0.obs;
   final showLogin = false.obs;
@@ -52,11 +55,12 @@ class HomeViewController extends GetxController {
   }
 
   void showUploadUnavailable() {
-    Get.snackbar(
-      '上传暂不可用',
-      '服务端尚未提供文件上传接口。',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    _api.uploadFile(File(selectedFile.string));
+    // Get.snackbar(
+    //   '上传暂不可用',
+    //   '服务端尚未提供文件上传接口。',
+    //   snackPosition: SnackPosition.BOTTOM,
+    // );
   }
 
   @override

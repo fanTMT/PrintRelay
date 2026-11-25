@@ -2,10 +2,8 @@ pub mod index;
 pub mod partials;
 
 use crate::state::Templates;
-use axum::{
-    http::{self, HeaderMap},
-    response::{IntoResponse, Response},
-};
+use axum::http::{self, HeaderMap};
+use axum::response::{IntoResponse, Response};
 use tracing::debug;
 
 pub async fn favicon() -> impl IntoResponse {
@@ -23,8 +21,8 @@ pub async fn fallback(
     debug!("请求的资源路径: {}", filename);
     let possible_paths = [&filename, &format!("assets/{}", filename)];
     for possible_path in possible_paths {
-        if let Some(context) = Templates::get(&possible_path) {
-            let mine_type = mime_guess::from_path(&possible_path).first_or_octet_stream();
+        if let Some(context) = Templates::get(possible_path) {
+            let mine_type = mime_guess::from_path(possible_path).first_or_octet_stream();
             let mut headers = HeaderMap::new();
             headers.insert(
                 http::header::CONTENT_TYPE,
@@ -36,6 +34,15 @@ pub async fn fallback(
                         .unwrap()
                 }),
             );
+            // // 启用跨源隔离，让 Skwasm 跑多线程
+            // headers.insert(
+            //     HeaderName::from_static("cross-origin-opener-policy"),
+            //     HeaderValue::from_static("same-origin"),
+            // );
+            // headers.insert(
+            //     HeaderName::from_static("cross-origin-embedder-policy"),
+            //     HeaderValue::from_static("credentialless"),
+            // );
             return (http::StatusCode::OK, headers, context.data).into_response();
         }
     }

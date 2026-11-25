@@ -19,7 +19,7 @@ const LOG: &str = "psr.log";
 fn init_dev(config: &Config) {
     let filter = EnvFilter::try_from_default_env()
         .unwrap_or_else(|_| "psr=debug,tower_http=debug,info".into());
-
+    println!("日志 debug");
     let fmt_layer = fmt::layer()
         .pretty() // 美化输出
         .with_ansi(true) // 启用颜色
@@ -27,7 +27,6 @@ fn init_dev(config: &Config) {
         .with_file(true) // 显示文件名
         .with_line_number(true); // 显示行号
 
-    println!("日志目录:{:?}", config.log.file_path);
     let file_appender = RollingFileAppender::builder()
         .filename_prefix(P)
         .filename_suffix(LOG)
@@ -66,7 +65,7 @@ fn init_pro(config: &Config) {
         .with_file(false) // 生产环境不显示文件名（安全考虑）
         .with_line_number(false); // 生产环境不显示行号
 
-    println!("日志目录:{:?}", config.log.file_path);
+    println!("日志 release");
     let file_appender = RollingFileAppender::builder()
         .filename_prefix(P)
         .filename_suffix(LOG)

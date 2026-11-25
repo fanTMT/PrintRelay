@@ -5,31 +5,57 @@ use std::{fs, path::Path};
 
 use crate::utils::ip::get_local_ip;
 
+static NAME: &str = "printerAxum";
+
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)] // 自动生成版本/帮助信息
+pub struct Args {
+    /// 端口（可选）
+    #[arg(short = 'p', long = "port", default_value_t = 3000)]
+    port: u32,
+    /// 公网IP（可选）
+    #[arg(short = 'i', long = "ip")]
+    ip: Option<String>,
+}
+
+/// 配置
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Config {
+    /// 软件相关
     pub app: AppConfig,
+    /// 数据库
     pub database: DatabaseConfig,
+    /// 日志
     pub log: LogConfig,
 }
 
+/// 软件配置
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct AppConfig {
     pub ip: String,
+    /// 启动端口
     pub port: u32,
+    /// 公网iP（可空）
     pub public_ip: Option<String>,
+    /// 最大单个上传文件大小
     pub upload_max: usize,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct DatabaseConfig {
+    /// 数据库地址（可MySQL）
     pub url: String,
+    /// 数据库最大连接数
     pub max_connections: u32,
+    /// 数据库超时时间
     pub timeout: u64,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct LogConfig {
+    /// 日志等级
     pub level: String,
+    /// 日志文件保存位置
     pub file_path: String,
 }
 
@@ -43,8 +69,8 @@ pub fn init_config() -> anyhow::Result<Config> {
     }
     let config = load_config(config_path)?;
     // println!("加载配置------- {:#?}", config);
-    println!("{:<15}{:?}MB", "最大上传文件大小:", config.app.upload_max);
-    println!("{:<15}{:?}", "日志文件目录:", config.log.file_path);
+    // println!("{:<10}{:?}MB", "最大上传文件大小:", config.app.upload_max);
+    println!("{:<10}{:?}", "日志文件目录:", config.log.file_path);
     Ok(config)
 }
 
@@ -72,15 +98,14 @@ pub fn load_config<P: AsRef<Path>>(path: P) -> anyhow::Result<Config> {
     Ok(config)
 }
 
-/// 获取默认配置文件路径（例如：用户目录下的 .printerAxum/config.toml）
+/// 获取默认配置文件路径
 pub fn default_config_path() -> anyhow::Result<std::path::PathBuf> {
     // 使用 dirs 库获取用户配置目录（跨平台：Linux 是 ~/.config，Windows 是 AppData/Roaming 等）
     let config_dir = dirs::config_dir()
         .context("无法获取系统配置目录")?
-        .join("printerAxum"); // 应用专属目录
+        .join(NAME); // 应用专属目录
     // 确保目录存在
     fs::create_dir_all(&config_dir).context("无法创建配置目录")?;
-
     // 配置文件路径
     Ok(config_dir.join("config.toml"))
 }
@@ -121,15 +146,4 @@ pub fn generate_default_config<P: AsRef<Path>>(
     std::fs::write(&path, toml_str)
         .with_context(|| format!("无法写入默认配置到: {}", path.as_ref().display()))?;
     Ok(())
-}
-
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)] // 自动生成版本/帮助信息
-pub struct Args {
-    /// 端口（可选）
-    #[arg(short = 'p', long = "port", default_value_t = 3000)]
-    port: u32,
-    /// 公网IP（可选）
-    #[arg(short = 'i', long = "ip")]
-    ip: Option<String>,
 }

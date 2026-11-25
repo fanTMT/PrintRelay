@@ -1,8 +1,12 @@
+use clap::Parser;
+use psr::Args;
 use psr::{create_pool, init_config, init_logger, run};
 use tracing::info;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    let _args = Args::parse();
+
     // 初始化配置
     let config = init_config()?;
     // 初始化 log

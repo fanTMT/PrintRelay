@@ -5,7 +5,12 @@ import 'package:ui_flutter/view/home_view/home_view_bindings.dart';
 
 void main() {
   const isRunningWithWasm = bool.fromEnvironment('dart.tool.dart2wasm');
-  debugPrint("是不是Wasm{$isRunningWithWasm}");
+  if (isRunningWithWasm) {
+    debugPrint("是Wasm");
+  } else {
+    debugPrint("是html");
+  }
+  // debugPrint("是不是Wasm{$isRunningWithWasm}");
   runApp(const MyApp());
 }
 
