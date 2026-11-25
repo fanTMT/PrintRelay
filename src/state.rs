@@ -15,5 +15,5 @@ pub struct AppState {
 
 // 资源文件嵌入（RustEmbed）
 #[derive(RustEmbed)]
-#[folder = "ui/dist"]
+#[folder = "ui/build/web"]
 pub struct Templates;

@@ -19,5 +19,5 @@ fn view_router() -> Router<AppState> {
     Router::new()
         .route("/", get(service::webview::index::home_view))
         .route("/favicon.svg", get(service::webview::favicon))
-        .route("/assets/{*path}", get(fallback))
+        .route("/{*path}", get(fallback))
 }
